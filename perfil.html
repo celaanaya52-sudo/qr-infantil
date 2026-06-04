@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Infantil Seguro</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#6B8E74,#D6C7A1);
+    font-family:Arial, sans-serif;
+}
+
+.tarjeta{
+    width:500px;
+    max-width:90%;
+    background:#F5F1E8;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+.icono{
+    text-align:center;
+    font-size:70px;
+}
+
+h1{
+    text-align:center;
+    color:#3E3E3E;
+    margin-bottom:20px;
+}
+
+.info{
+    margin-top:20px;
+}
+
+.info p{
+    font-size:18px;
+    margin:12px 0;
+    color:#333;
+}
+
+.mensaje{
+    margin-top:25px;
+    padding:15px;
+    border-radius:10px;
+    background:#E6E0D1;
+    text-align:center;
+    color:#444;
+    font-weight:bold;
+}
+
+.botones{
+    text-align:center;
+    margin-top:20px;
+}
+
+.boton{
+    display:inline-block;
+    text-decoration:none;
+    color:white;
+    padding:12px 20px;
+    border-radius:10px;
+    margin:5px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.llamar{
+    background:#6B8E74;
+}
+
+.llamar:hover{
+    background:#587660;
+}
+
+.whatsapp{
+    background:#4F6F52;
+}
+
+.whatsapp:hover{
+    background:#3F5A42;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="tarjeta">
+
+    <div class="icono">🛡️</div>
+
+    <h1>QR Infantil Seguro</h1>
+
+    <div class="info">
+
+        <p><strong>👦 Niño:</strong> <span id="nino"></span></p>
+
+        <p><strong>👨 Apoderado:</strong> <span id="apoderado"></span></p>
+
+        <p><strong>📞 Teléfono:</strong> <span id="telefono"></span></p>
+
+        <p><strong>🏠 Dirección:</strong> <span id="direccion"></span></p>
+
+        <p><strong>📱 Redes Sociales:</strong> <span id="redes"></span></p>
+
+    </div>
+
+    <div class="mensaje">
+        Si encuentra a este menor, por favor comuníquese con el apoderado.
+    </div>
+
+    <div class="botones">
+
+        <a id="btnLlamar" class="boton llamar" href="#">
+            📞 Llamar
+        </a>
+
+        <a id="btnWhatsapp" class="boton whatsapp" href="#" target="_blank">
+            💬 WhatsApp
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const nino = params.get("nino") || "-";
+const apoderado = params.get("apoderado") || "-";
+const telefono = params.get("telefono") || "";
+const direccion = params.get("direccion") || "-";
+const redes = params.get("redes") || "-";
+
+document.getElementById("nino").textContent = nino;
+document.getElementById("apoderado").textContent = apoderado;
+document.getElementById("telefono").textContent = telefono || "-";
+document.getElementById("direccion").textContent = direccion;
+document.getElementById("redes").textContent = redes;
+
+document.getElementById("btnLlamar").href =
+"tel:" + telefono;
+
+document.getElementById("btnWhatsapp").href =
+"https://wa.me/51" + telefono;
+
+</script>
+
+</body>
+</html>
