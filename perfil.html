@@ -131,6 +131,9 @@ h1{
         <a id="btnWhatsapp" class="boton whatsapp" href="#" target="_blank">
             💬 WhatsApp
         </a>
+        <a id="btnMapa" class="boton llamar" href="#" target="_blank">
+    📍 Ver ubicación
+        </a>
 
     </div>
 
@@ -157,6 +160,10 @@ document.getElementById("btnLlamar").href =
 
 document.getElementById("btnWhatsapp").href =
 "https://wa.me/51" + telefono;
+    
+document.getElementById("btnMapa").href =
+"https://www.google.com/maps/search/?api=1&query=" +
+encodeURIComponent(direccion);
 
 </script>
 
