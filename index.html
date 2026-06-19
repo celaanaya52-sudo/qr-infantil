@@ -149,6 +149,24 @@ window.generarQR = async function() {
     "Red Social": redes,
     Fecha: new Date().toISOString()
   });
+    fetch(
+  "https://script.google.com/macros/s/AKfycbw8NrpEyGPBlR_l7he0bz-ByYdZGO4bioGwc83KJTu1btgiW2GRPkMkUdI444dNeqYCaw/exec",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain"
+    },
+    body: JSON.stringify({
+      nino: nino,
+      apoderado: apoderado,
+      telefono: telefono,
+      direccion: direccion,
+      redes: redes
+    })
+  }
+).catch(error => {
+  console.log("Error Google Sheets:", error);
+});
 
   let enlace =
   "https://celaanaya52-sudo.github.io/qr-infantil/perfil.html?" +
