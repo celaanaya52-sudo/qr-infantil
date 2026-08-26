@@ -150,67 +150,82 @@ window.generarQR = async function() {
     return;
   }
 
-  console.log(
-    `Niño: ${nino},
-    Apoderado: ${apoderado},
-    Teléfono: ${telefono},
-    Dirección: ${direccion},
-    "Red Social": ${redes},
-     Medicamentos: ${medicamentos},
-     Alergias: ${alergias},
-     Importante: ${importante},`
-  )
+  // GUARDAR EN FIREBASE
+  try {
 
-  await addDoc(collection(db, "REGISTROS"), {
-    Niño: nino,
-    Apoderado: apoderado,
-    Teléfono: telefono,
-    Dirección: direccion,
-    "Red Social": redes,
-     Medicamentos: medicamentos,
-     Alergias: alergias,
-     Importante: importante,
-    Fecha: new Date().toISOString()
-  });
-    fetch(
-  "https://script.google.com/macros/s/AKfycbw8NrpEyGPBlR_l7he0bz-ByYdZGO4bioGwc83KJTu1btgiW2GRPkMkUdI444dNeqYCaw/exec",
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "text/plain"
-    },
-body: JSON.stringify({
-  nino: nino,
-  apoderado: apoderado,
-  telefono: telefono,
-  direccion: direccion,
-  redes: redes,
-  medicamentos: medicamentos,
-  alergias: alergias,
-  importante: importante
-})
+    await addDoc(collection(db, "REGISTROS"), {
+      Niño: nino,
+      Apoderado: apoderado,
+      Teléfono: telefono,
+      Dirección: direccion,
+      "Red Social": redes,
+      Medicamentos: medicamentos,
+      Alergias: alergias,
+      Importante: importante,
+      Fecha: new Date().toISOString()
+    });
+
+    console.log("Datos guardados correctamente en Firebase.");
+
+  } catch(error) {
+
+    console.error("Error en Firebase:", error);
+
   }
-).catch(error => {
-  console.log("Error Google Sheets:", error);
-});
 
-let enlace =
-"https://celaanaya52-sudo.github.io/qr-infantil/perfil.html?" +
-"nino=" + encodeURIComponent(nino) +
-"&apoderado=" + encodeURIComponent(apoderado) +
-"&telefono=" + encodeURIComponent(telefono) +
-"&direccion=" + encodeURIComponent(direccion) +
-"&redes=" + encodeURIComponent(redes) +
-"&medicamentos=" + encodeURIComponent(medicamentos) +
-"&alergias=" + encodeURIComponent(alergias) +
-"&importante=" + encodeURIComponent(importante);
 
+  // GUARDAR EN GOOGLE SHEETS
+  fetch(
+    "https://script.google.com/macros/s/AKfycbw8NrpEyGPBlR_l7he0bz-ByYdZGO4bioGwc83KJTu1btgiW2GRPkMkUdI444dNeqYCaw/exec",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain"
+      },
+      body: JSON.stringify({
+        nino: nino,
+        apoderado: apoderado,
+        telefono: telefono,
+        direccion: direccion,
+        redes: redes,
+        medicamentos: medicamentos,
+        alergias: alergias,
+        importante: importante
+      })
+    }
+  )
+  .then(() => {
+    console.log("Datos enviados a Google Sheets.");
+  })
+  .catch(error => {
+    console.error("Error Google Sheets:", error);
+  });
+
+
+  // CREAR ENLACE DEL PERFIL
+  let enlace =
+    "https://celaanaya52-sudo.github.io/qr-infantil/perfil.html?" +
+    "nino=" + encodeURIComponent(nino) +
+    "&apoderado=" + encodeURIComponent(apoderado) +
+    "&telefono=" + encodeURIComponent(telefono) +
+    "&direccion=" + encodeURIComponent(direccion) +
+    "&redes=" + encodeURIComponent(redes) +
+    "&medicamentos=" + encodeURIComponent(medicamentos) +
+    "&alergias=" + encodeURIComponent(alergias) +
+    "&importante=" + encodeURIComponent(importante);
+
+
+  // CREAR QR
   let qrURL =
-  "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" +
-  encodeURIComponent(enlace);
+    "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" +
+    encodeURIComponent(enlace);
 
+
+  // MOSTRAR QR
   document.getElementById("resultado").innerHTML =
-  `<h3>QR generado</h3><img src="${qrURL}">`;
+    `<h3>QR generado</h3>
+     <img src="${qrURL}" alt="Código QR">`;
+
 }
 </script>
 </body>
